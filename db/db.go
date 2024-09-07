@@ -9,11 +9,11 @@ import (
 
 var DB *sql.DB
 
-func InitDB() error {
+func InitDB(path string) error {
 	var err error
-	DB, err = sql.Open("sqlite3", "./passwords.db")
+	DB, err = sql.Open("sqlite3", path)
 	if err != nil {
-		fmt.Println("Error opnening db", err)
+		fmt.Println("Error opening db", err)
 	}
 
 	createPasswordTableStatement := `
