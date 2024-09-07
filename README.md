@@ -6,13 +6,13 @@ things done:
 - create a solution to store created passwords
 - make keys unique
 - have db file not be in this directory
+- handle accessing passwords
 
 things to do:
 
 - have location of db file be customizable
 - make generate command flow into save command
 - have secure secret
-- handle accessing passwords
 - handle deleting passwords
 
 ideas to do later:
