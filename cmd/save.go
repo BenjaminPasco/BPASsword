@@ -1,14 +1,13 @@
 package cmd
 
 import (
-	"bufio"
 	"crypto/aes"
 	"crypto/cipher"
 	"crypto/rand"
 	"encoding/base64"
 	"fmt"
 	"io"
-	"os"
+	"strings"
 
 	"github.com/BenjaminPasco/bpass/db"
 	"github.com/spf13/cobra"
@@ -32,18 +31,18 @@ var saveCmd = &cobra.Command{
 			return
 		}
 		if password == "" {
-			fmt.Println("Empty password")
+			fmt.Println("Undefined password")
 			return
 		}
-
-		reader := bufio.NewReader(os.Stdin)
-		fmt.Print("account/application/domain: ")
-		key, err := reader.ReadString('\n')
+		key, err := cmd.Flags().GetString("identifier")
 		if err != nil {
 			fmt.Println(err)
 			return
 		}
-		key = key[:len(key)-1]
+		if key == "" {
+			fmt.Println("Undefined identifier")
+			return
+		}
 
 		encryptedPassword, err := encrypt(password)
 		if err != nil {
@@ -52,6 +51,10 @@ var saveCmd = &cobra.Command{
 		}
 		err = savePassword(key, encryptedPassword)
 		if err != nil {
+			if strings.Contains(strings.ToLower(err.Error()), "unique") {
+				fmt.Println("Error identifier already used")
+				return
+			}
 			fmt.Println("Error saving password:", err)
 			return
 		}
@@ -62,6 +65,8 @@ var saveCmd = &cobra.Command{
 func init() {
 	saveCmd.Flags().StringP("password", "p", "", "Password to save")
 	saveCmd.MarkFlagRequired("password")
+	saveCmd.Flags().StringP("identifier", "i", "", "Paremeter to identifie the password")
+	saveCmd.MarkFlagRequired("identifier")
 }
 
 func encrypt(password string) (string, error) {
