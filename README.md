@@ -5,10 +5,10 @@ things done:
 - create generate password command
 - create a solution to store created passwords
 - make keys unique
+- have db file not be in this directory
 
 things to do:
 
-- have db file not be in this directory
 - have location of db file be customizable
 - make generate command flow into save command
 - have secure secret
