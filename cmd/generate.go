@@ -31,7 +31,7 @@ func init() {
 	// rootCmd.AddCommand(generateCmd)
 
 	// define the length flag for the command with the default value of 24
-	generateCmd.Flags().IntVarP(&length, "length", "1", 24, "Length of the password")
+	generateCmd.Flags().IntVarP(&length, "length", "l", 24, "Length of the password")
 }
 
 // this is the function generating the password

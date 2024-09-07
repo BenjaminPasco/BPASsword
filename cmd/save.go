@@ -9,11 +9,10 @@ import (
 	"io"
 	"strings"
 
+	"github.com/BenjaminPasco/bpass/constants"
 	"github.com/BenjaminPasco/bpass/db"
 	"github.com/spf13/cobra"
 )
-
-var encryptionKey = []byte("abababababababababababababababab")
 
 type PasswordEntry struct {
 	Key string `json:"key"`
@@ -70,7 +69,7 @@ func init() {
 }
 
 func encrypt(password string) (string, error) {
-	block, err := aes.NewCipher(encryptionKey)
+	block, err := aes.NewCipher([]byte(constants.EncryptionKey))
 	if err != nil {
 		return "", err
 	}
@@ -85,7 +84,7 @@ func encrypt(password string) (string, error) {
     stream := cipher.NewCFBEncrypter(block, iv)
     stream.XORKeyStream(ciphertext[aes.BlockSize:], passwordBytes)
 
-    return base64.URLEncoding.EncodeToString(ciphertext), nil
+    return base64.StdEncoding.EncodeToString(ciphertext), nil
 }
 
 func savePassword(key string, encryptedPassword string) error {
