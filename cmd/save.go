@@ -10,11 +10,16 @@ import (
 	"io"
 	"os"
 
+	"github.com/BenjaminPasco/bpass/db"
 	"github.com/spf13/cobra"
 )
 
-var passwordFile = "password.txt"
 var encryptionKey = []byte("abababababababababababababababab")
+
+type PasswordEntry struct {
+	Key string `json:"key"`
+	Password string `json:"password"`
+}
 
 var saveCmd = &cobra.Command{
 	Use: "save",
@@ -42,10 +47,10 @@ var saveCmd = &cobra.Command{
 
 		encryptedPassword, err := encrypt(password)
 		if err != nil {
-			fmt.Println(err)
+			fmt.Println("Error encrypting password: ", err)
 			return
 		}
-		err = SavePassword(key, encryptedPassword)
+		err = savePassword(key, encryptedPassword)
 		if err != nil {
 			fmt.Println("Error saving password:", err)
 			return
@@ -56,6 +61,7 @@ var saveCmd = &cobra.Command{
 
 func init() {
 	saveCmd.Flags().StringP("password", "p", "", "Password to save")
+	saveCmd.MarkFlagRequired("password")
 }
 
 func encrypt(password string) (string, error) {
@@ -77,13 +83,15 @@ func encrypt(password string) (string, error) {
     return base64.URLEncoding.EncodeToString(ciphertext), nil
 }
 
-func SavePassword(key string, encryptedPassword string) error {
-	file, err := os.OpenFile(passwordFile, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0664)
-	if err != nil {
-		return err
-	}
-	defer file.Close()
-
-	_, err = file.WriteString(fmt.Sprintf("%s: %s\n", key, encryptedPassword))
+func savePassword(key string, encryptedPassword string) error {
+	
+	savePasswordStatement := `
+		INSERT INTO passwords (
+			key,
+			encrypted_password
+		)
+		VALUES (?, ?)
+	`
+	_, err := db.DB.Exec(savePasswordStatement, key, encryptedPassword)
 	return err
 }
