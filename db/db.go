@@ -19,7 +19,7 @@ func InitDB() error {
 	createPasswordTableStatement := `
 	CREATE TABLE IF NOT EXISTS passwords (
 		id INTEGER PRIMARY KEY AUTOINCREMENT,
-		key TEXT NOT NULL,
+		key TEXT NOT NULL UNIQUE,
 		encrypted_password TEXT NOT NULL
 	);`
 
