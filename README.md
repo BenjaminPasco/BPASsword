@@ -13,6 +13,7 @@ things done:
 
 things to do:
 
+- add fingerprint lock for accessing keychain if possible
 - add filtering for listing passwords
 - make generate command flow into save command
 - handle deleting passwords
