@@ -66,3 +66,30 @@ func GetEnryptedPasswordFromDb(key string) ([]byte, []byte, error) {
 	result.Scan(&encryptedPassword, &salt)
 	return encryptedPassword, salt, nil
 }
+
+type PasswordData struct {
+	Identifier string
+	Description string
+}
+
+func ListPasswords() ([]PasswordData, error) {
+	listPasswordsStatement := `
+		SELECT key, description FROM passwords
+	`
+	rows, err := DB.Query(listPasswordsStatement)
+	if err != nil {
+		return nil, err
+	}
+
+	// processing raw data
+	var entries []PasswordData
+	for rows.Next() {
+		var entry PasswordData
+		err := rows.Scan(&entry.Identifier, &entry.Description)
+		if err != nil {
+			return nil, err
+		}
+		entries = append(entries, entry)
+	}
+	return entries, nil
+}
