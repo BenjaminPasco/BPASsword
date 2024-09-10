@@ -1,4 +1,4 @@
-# BPASsword
+# bpass
 
 things done:
 
@@ -10,13 +10,13 @@ things done:
 - handle encrypting using derived keys from master key
 - store masterkey in keychain
 - list passwords
+- handle deleting passwords one by one and all at once
 
 things to do:
 
 - add fingerprint lock for accessing keychain if possible
 - add filtering for listing passwords
 - make generate command flow into save command
-- handle deleting passwords
 
 ideas to do later:
 
