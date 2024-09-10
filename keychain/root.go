@@ -18,7 +18,7 @@ func StoreMasterPassword(masterPassword []byte) error {
 	item.SetAccessGroup(serviceName)
 	item.SetData(masterPassword)
 	item.SetSynchronizable(keychain.SynchronizableNo)
-	item.SetAccessible(keychain.AccessibleAfterFirstUnlock)
+	item.SetAccessible(keychain.AccessibleWhenUnlocked)
 
 	err :=keychain.AddItem(item)
 	return err

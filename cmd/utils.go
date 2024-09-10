@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"bufio"
+	"crypto/rand"
 	"fmt"
 	"os"
 
@@ -11,7 +12,7 @@ import (
 func GetMasterPassword() ([]byte, error) {
 	masterPasswordFromKeychain, err := keychain.RetrieveMasterPassword()
 	if err != nil {
-		masterPasswordFromInput, err := InputMasterPassword()
+		masterPasswordFromInput, err := GenerateMasterPassword()
 		if err != nil {
 			return nil, err
 		}
@@ -32,4 +33,13 @@ func InputMasterPassword() ([]byte, error) {
 		return nil, err
 	}
 	return []byte(input), nil
+}
+
+func GenerateMasterPassword() ([]byte, error) {
+	key := make([]byte, 32)
+	_, err := rand.Read(key)
+	if err != nil {
+		return nil, err
+	}
+	return key, nil
 }
