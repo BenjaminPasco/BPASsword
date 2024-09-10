@@ -93,3 +93,33 @@ func ListPasswords() ([]PasswordData, error) {
 	}
 	return entries, nil
 }
+
+func DeleteAllPasswords() error {
+	
+	deleteAllPasswordsStatement := `
+		DELETE FROM passwords;
+	`
+
+	_, err := DB.Exec(deleteAllPasswordsStatement)
+	return err
+}
+
+func DeletePassword(identifier string) error {
+	
+	deletePasswordStatement := `
+		DELETE FROM passwords WHERE key = ?;
+	`
+
+	result, err := DB.Exec(deletePasswordStatement, identifier)
+	if err != nil {
+		return err
+	}
+	rows, err := result.RowsAffected()
+	if err != nil {
+		return err
+	}
+	if rows ==  0 {
+		return errors.New("could not find password with matching identifier")
+	}
+	return err
+}

@@ -45,8 +45,9 @@ func init() {
 	rootCmd.AddCommand(generateCmd)
 	rootCmd.AddCommand(saveCmd)
 	rootCmd.AddCommand(decodeCmd)
-	rootCmd.AddCommand(clearKeychain)
-	rootCmd.AddCommand(list)
+	rootCmd.AddCommand(clearKeychainCmd)
+	rootCmd.AddCommand(listCmd)
+	rootCmd.AddCommand(deleteCmd)
 
 	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 	

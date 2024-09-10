@@ -7,7 +7,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var clearKeychain = &cobra.Command{
+var clearKeychainCmd = &cobra.Command{
 	Use: "clearkeychain",
 	Short: "delete master key in keychain",
 	Run:  func (cmd *cobra.Command, args []string)  {
