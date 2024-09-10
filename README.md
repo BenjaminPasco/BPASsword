@@ -9,10 +9,10 @@ things done:
 - handle accessing passwords
 - handle encrypting using derived keys from master key
 - store masterkey in keychain
+- list passwords
 
 things to do:
 
-- list passwords
 - add filtering for listing passwords
 - make generate command flow into save command
 - handle deleting passwords
