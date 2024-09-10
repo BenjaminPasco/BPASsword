@@ -7,12 +7,14 @@ things done:
 - make keys unique
 - have db file not be in this directory
 - handle accessing passwords
+- handle encrypting using derived keys from master key
+- store masterkey in keychain
 
 things to do:
 
-- have location of db file be customizable
+- list passwords
+- add filtering for listing passwords
 - make generate command flow into save command
-- have secure secret
 - handle deleting passwords
 
 ideas to do later:
