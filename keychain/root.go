@@ -17,8 +17,7 @@ func StoreMasterPassword(masterPassword []byte) error {
 	item.SetLabel("bpass cli master password")
 	item.SetAccessGroup(serviceName)
 	item.SetData(masterPassword)
-	item.SetSynchronizable(keychain.SynchronizableNo)
-	item.SetAccessible(keychain.AccessibleWhenUnlocked)
+	item.SetAccessible(keychain.AccessibleWhenPasscodeSetThisDeviceOnly)
 
 	err :=keychain.AddItem(item)
 	return err
@@ -32,7 +31,7 @@ func RetrieveMasterPassword() ([]byte, error) {
 	query.SetMatchLimit(keychain.MatchLimitOne)
 	query.SetReturnData(true)
 
-	item, err :=keychain.QueryItem(query)
+	item, err := keychain.QueryItem(query)
 	if err != nil {
 		return nil, err
 	}

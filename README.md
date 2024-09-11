@@ -11,16 +11,4 @@ things done:
 - store masterkey in keychain
 - list passwords
 - handle deleting passwords one by one and all at once
-
-things to do:
-
-- add fingerprint lock for accessing keychain if possible
-- add filtering for listing passwords
-- make generate command flow into save command
-
-ideas to do later:
-
-- handle ssh keys
-- create frontend to visualize passwords, update them, delete them
-- create some sort of browser plugin/extension that will link password in db to site
-- add remote backup sync with go service on vps
+- make generate command save the password if wanted
